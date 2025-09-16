@@ -1,0 +1,31 @@
+name: Run CI test.py from CI-Repo
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  run-ci-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout App-Repo (PR branch)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref || '' }}
+
+      - name: Checkout CI-Repo to ./ci
+        uses: actions/checkout@v4
+        with:
+          repository: parvezshah88/testcirepo1  
+          ref: main                  
+          path: ci
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run test.py from CI-Repo
+        run: python ci/test.py
+
