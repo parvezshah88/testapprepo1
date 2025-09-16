@@ -26,6 +26,10 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Run test.py from CI-Repo
-        run: python ci/test.py
+      - name: Run test.py from CI-Repo and capture output
+        run: |
+          python ci/test.py > objects.txt
+          echo "==== Object Script Output ===="
+          cat objects.txt
+
 
